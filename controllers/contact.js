@@ -12,15 +12,15 @@ const createContacts = async(req,res) => {
 
 const updateContacts = async(req,res) => {
     try {
-        const {id: contactID} = req.params
-        const contact = await Contact.findByIdAndUpdate({_id: contactID},req.body,{
+        const id = req.params.id
+        const contact = await Contact.findByIdAndUpdate(id,req.body,{
             new: true,
             runValidators: true
         })
         if(!contact){
-            return next(createCustomError(`No contact with id: ${contactID}`, 404 ))
+            return next(createCustomError(`No contact with id: ${contact}`, 404 ))
         }
-        res.status(200).json({id:contactID,data: req,body})
+        res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
     }
@@ -28,15 +28,13 @@ const updateContacts = async(req,res) => {
 
 const deleteContacts = async(req,res) => {
     try {
-        const {id: contactID} = req.params
-        const contact = await Contact.findByIdAndDelete({_id: contactID},req.body,{
-            new: true,
-            runValidators: true
-        })
+        const id= req.params.id
+        const contact = await Contact.findByIdAndDelete({id
+    })
         if(!contact){
-            return next(createCustomError(`No contact with id: ${contactID}`, 404 ))
+            return next(createCustomError(`No contact with id: ${contact}`, 404 ))
         }
-        res.status(200).json({id:contactID,data: req,body})
+        res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
     }
@@ -63,8 +61,12 @@ const findById = async(req,res) => {
 
 const findByEmail = async(req,res) => {
     try {
-        const {email: contactEmail} = req.params
-        const contact = await Contact.findOne({_email:contactEmail});
+        const email= req.query.email
+        const query={}
+        if(email){
+            query.email=email
+        }
+        const contact = await Contact.find(query);
         res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
@@ -73,8 +75,12 @@ const findByEmail = async(req,res) => {
 
 const findByPhone = async(req,res) => {
     try {
-        const {phone: contactPhone} = req.params
-        const contact = await Contact.findOne({_phone:contactPhone});
+        const phone = req.query.phone
+        const query = {}
+        if(phone){
+            query.phone = phone
+        }
+        const contact = await Contact.findOne(query);
         res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})

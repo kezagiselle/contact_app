@@ -1,19 +1,19 @@
-import contact  from '../models/contact.js'
+import Contact  from '../models/contact.js'
 //const {createCustomError} = require()
 
-const createContacts = async(req,re) => {
+const createContacts = async(req,res) => {
     try {
-        const contact = await contact.create(req.body)
+        const contact = await Contact.create(req.body)
         res.status(201).json(req.body)
     } catch (error){
         res.status(500).json({msg: error})
     }
 }
 
-const updateContacts = async(req,re) => {
+const updateContacts = async(req,res) => {
     try {
         const {id: contactID} = req.params
-        const contact = await contact.findByIdAndUpdate({_id: contactID},req.body,{
+        const contact = await Contact.findByIdAndUpdate({_id: contactID},req.body,{
             new: true,
             runValidators: true
         })
@@ -26,10 +26,10 @@ const updateContacts = async(req,re) => {
     }
 }
 
-const deleteContacts = async(req,re) => {
+const deleteContacts = async(req,res) => {
     try {
         const {id: contactID} = req.params
-        const contact = await contact.findByIdAndDelete({_id: contactID},req.body,{
+        const contact = await Contact.findByIdAndDelete({_id: contactID},req.body,{
             new: true,
             runValidators: true
         })
@@ -42,40 +42,40 @@ const deleteContacts = async(req,re) => {
     }
 }
 
-const findAllContacts = async(req,re) => {
+const findAllContacts = async(req,res) => {
     try {
-        const contact = await contact.find({})
-        res.status(200).json({contacts})
+        const contact = await Contact.find({})
+        res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
     }
 }
 
-const findById = async(req,re) => {
+const findById = async(req,res) => {
     try {
         const {id: contactID} = req.params
-        const contact = await contact.findOne({_id:contactID});
-        res.status(200).json({contacts})
+        const contact = await Contact.findOne({_id:contactID});
+        res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
     }
 }
 
-const findByEmail = async(req,re) => {
+const findByEmail = async(req,res) => {
     try {
         const {email: contactEmail} = req.params
-        const contact = await contact.findOne({_email:contactEmail});
-        res.status(200).json({contacts})
+        const contact = await Contact.findOne({_email:contactEmail});
+        res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
     }
 }
 
-const findByPhone = async(req,re) => {
+const findByPhone = async(req,res) => {
     try {
         const {phone: contactPhone} = req.params
-        const contact = await contact.findOne({_phone:contactPhone});
-        res.status(200).json({contacts})
+        const contact = await Contact.findOne({_phone:contactPhone});
+        res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})
     }

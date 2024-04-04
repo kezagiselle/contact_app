@@ -29,8 +29,7 @@ const updateContacts = async(req,res) => {
 const deleteContacts = async(req,res) => {
     try {
         const id= req.params.id
-        const contact = await Contact.findByIdAndDelete({id
-    })
+        const contact = await Contact.findByIdAndDelete(id)
         if(!contact){
             return next(createCustomError(`No contact with id: ${contact}`, 404 ))
         }
@@ -61,12 +60,9 @@ const findById = async(req,res) => {
 
 const findByEmail = async(req,res) => {
     try {
-        const email= req.query.email
-        const query={}
-        if(email){
-            query.email=email
-        }
-        const contact = await Contact.find(query);
+        const email= req.params.email;
+        console.log(req.params)
+        const contact = await Contact.find({ email: email});
         res.status(200).json({contact})
     } catch (error){
         res.status(500).json({msg: error})

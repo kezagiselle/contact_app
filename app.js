@@ -2,6 +2,8 @@
 import dotenv from 'dotenv'
 dotenv.config()
 import express from 'express'
+import swaggerUi from 'swagger-ui-express'
+import swagger from './docs/swagger.json' assert {type:"json"}
 const app = express();
 import connectDB from './db/connect.js';
 import contacts from './routes/contact.js' 
@@ -11,6 +13,7 @@ import notfound from './middleware/not-found.js'
 //middleware
 app.use(express.json())
 app.use('/contacts', contacts)
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swagger));
 app.use(notfound)
 
 

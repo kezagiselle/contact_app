@@ -5,7 +5,7 @@
       "description": "API documentation for contact CRUD operations",
       "version": "1.0.0"
     },
-    "host": "localhost:3000",
+    "host": "localhost:4000",
     "basePath": "",
     "schemes": ["http", "https"],
     "paths": {
@@ -32,7 +32,7 @@
           }
         }
       },
-      "/contacts/{id}": {
+      "/contacts/findById/{id}": {
         "put": {
           "summary": "Update a contact by ID",
           "description": "Update a contact by ID",
@@ -109,7 +109,6 @@
           }
         }
       },
-    
     "/contacts/findAllContacts":{
 "get":{
     "summary": "Find all contacts",
@@ -175,7 +174,7 @@
               }
             }
         }
-},
+    },
 "definitions": {
       "contact": {
         "type": "object",
@@ -204,6 +203,5 @@
         },
         "required": ["FirstName","LastName","email","phone","address","company","profilePicture"]
       }
-    
   }
 }
